@@ -60,5 +60,3 @@ while True:
                                         red_player_score += 1
                                         reflections_per_round = 1
                                         break
-
-
