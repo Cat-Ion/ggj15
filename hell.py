@@ -28,6 +28,7 @@ if __name__ == '__main__':
         graphics.init()
         camera.init()
         camera.calibrate(graphics.screen)
+        graphics.draw()
 
         while True:
                 roundcount += 1
@@ -69,3 +70,8 @@ if __name__ == '__main__':
                                                 reflections_per_round = 1
                                                 graphics.set_scores([green_player_score, red_player_score])
                                                 break
+                        if score >= 0:
+                                pong_physics.ball_pos = (320,240)
+                                graphics.draw()
+                                break
+                                

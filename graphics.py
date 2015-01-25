@@ -34,7 +34,6 @@ def draw_world():
                                      True, (255,0,0))
     screen.blit(left_score, (160 - left_score.get_width(), 0))
     screen.blit(right_score, (480 - left_score.get_width(), 0))
-    
 
 
 def draw_lines(lines):

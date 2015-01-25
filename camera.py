@@ -67,7 +67,7 @@ def calibrate(screen):
     screen.fill((0,0,0))
     pygame.display.flip()
     for i in range(10): acquire()
-
+    
 def acquire():
     ret, img = capture.read()
     if not ret:
