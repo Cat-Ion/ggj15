@@ -4,7 +4,7 @@ import camera
 import time
 import gamemaths
 
-roundcount_for_reflection_upgrade = 5 
+roundcount_for_reflection_upgrade = 1
 roundcount_for_line_upgrade = 5
 roundcount = 0
 
@@ -30,14 +30,16 @@ camera.calibrate(graphics.screen)
 
 while True:
         roundcount += 1
-        reflections_per_round = roundcount / roundcount_for_reflection_upgrade
-        lines = roundcount / roundcount_for_line_upgrade
+        reflections_per_round = 1 + roundcount / roundcount_for_reflection_upgrade
+        lines = 1 + roundcount / roundcount_for_line_upgrade
 
         for line in range(lines):
                 pong_physics.barriers.append(
-                        gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 40))
+                        gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
+                graphics.draw()
                 pong_physics.barriers.append(
-                        gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 40))
+                        gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
+                graphics.draw()
 
 
         next_time = time.time()
@@ -50,9 +52,12 @@ while True:
                                 time.sleep(next_time-time.time())
                         else:
                                 if score<0:
-                                        pass
+                                        break
 
-                                elif score==0:
+                                pong_physics.barriers[:] = []
+                                graphics.draw()
+                                        
+                                if score==0:
                                         green_player_score += 1
                                         reflections_per_round = 1
                                         break
