@@ -30,7 +30,6 @@ def step(dt):
 
     # Barrier collisions
     collision = 0
-    print(barriers)
     for barr in barriers:
         (Bx,By), (Zx,Zy), (Bvx,Bvy), collision = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), barr )
     
@@ -47,7 +46,7 @@ def step(dt):
     
     ball_pos = Zx,Zy
     ball_vel = Bvx,Bvy
-    return collision, g1+g2
+    return collision, 0 if g1 else 1 if g2 else -1 
 
 
 
