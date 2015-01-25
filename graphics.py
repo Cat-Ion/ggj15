@@ -15,10 +15,13 @@ def clear_screen():
 def draw_world():
     for line in pong_physics.barriers:
         pygame.draw.line(screen, (128, 128, 128), line[0], line[1], 2)
+    pygame.draw.line(screen, (0,255,0), pong_physics.goals[0][0], pong_physics.goals[0][1], 5)
+    pygame.draw.line(screen, (255,0,0), pong_physics.goals[1][0], pong_physics.goals[1][1], 5)
     pygame.draw.circle(screen, (255, 255, 255),
                        (int(pong_physics.ball_pos[0]),
                         int(pong_physics.ball_pos[1])),
                        int(pong_physics.ball_rad), 0)
+
 
 def draw_lines(lines):
     screen.fill((0,0,0))
