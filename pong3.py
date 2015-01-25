@@ -8,6 +8,8 @@ screen = pygame.display.set_mode( pong_physics.field_size )
 pygame.display.set_caption("Pong")
 screen.fill((255,255,255))
 
+pygame.mixer.music.load('tock2.wav')
+
 tnext = None
 dt = 0.05
 run = 1
@@ -34,15 +36,17 @@ try:
 
         # Physics step
         c,g = pong_physics.step(dt)
-        if c: print "Collision"
-        if g: print "Goal"
+        if c:
+            print "Collision"
+            pygame.mixer.music.play()
+        if c and g==0: print "Goal 1"
+        if c and g==1: print "Goal 2"
 
         # Update display
         screen.fill((255,255,255))
 
         for b in pong_physics.barriers:
             pygame.draw.line( screen, (0,0,0), b[0], b[1], 2 )
-            if c: print 'Collision' 
 
         g1 = pong_physics.goals[0]
         pygame.draw.line( screen, (255,0,0), g1[0], g1[1], 4 )
