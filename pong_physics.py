@@ -9,7 +9,6 @@ field_size = 640, 480
 ball_rad = 10
 ball_pos = field_size[0]/2, field_size[1]/2
 ball_vel = 100,40
-ball_radius = 10         # Radius
 
 #Barriers
 barriers = [] ## [ ((500,100),(600,400)) ]
