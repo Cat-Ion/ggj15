@@ -24,44 +24,54 @@ ignore_color = 0 #0=green,1=red
 fps=60
 game_over=False;   
 
-graphics.init()
-camera.init()
-camera.calibrate(graphics.screen)
+if __name__ == '__main__':
+        graphics.init()
+        camera.init()
+        camera.calibrate(graphics.screen)
+        graphics.draw()
 
-while True:
-        roundcount += 1
-        reflections_per_round = 1 + roundcount / roundcount_for_reflection_upgrade
-        lines = 1 + roundcount / roundcount_for_line_upgrade
+        while True:
+                roundcount += 1
+                reflections_per_round = 1 + roundcount / roundcount_for_reflection_upgrade
+                lines = 1 + roundcount / roundcount_for_line_upgrade
+                
+                for line in range(lines):
+                        pong_physics.barriers.append(
+                                gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
+                        graphics.draw()
+                        pong_physics.barriers.append(
+                                gamemaths.fit_line(camera.get_line(1, graphics.draw_lines), 100))
+                        graphics.draw()
 
-        for line in range(lines):
-                pong_physics.barriers.append(
-                        gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
-                graphics.draw()
-                pong_physics.barriers.append(
-                        gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
-                graphics.draw()
 
+                next_time = time.time()
+                for reflection_count in range(reflections_per_round):
+                        while True:
+                                collision,score = pong_physics.step(1./fps)
+                                if not collision:
+                                        graphics.draw()
+                                        next_time+=1./fps
+                                        time.sleep(next_time-time.time())
+                                else:
+                                        print(collision, score)
+                                        if score<0:
+                                                break
 
-        next_time = time.time()
-        for reflection_count in range(reflections_per_round):
-                while True:
-                        collision,score = pong_physics.step(1./fps)
-                        if not collision:
-                                graphics.draw()
-                                next_time+=1./fps
-                                time.sleep(next_time-time.time())
-                        else:
-                                if score<0:
-                                        break
-
-                                pong_physics.barriers[:] = []
-                                graphics.draw()
+                                        pong_physics.barriers[:] = []
+                                        graphics.draw()
                                         
-                                if score==0:
-                                        green_player_score += 1
-                                        reflections_per_round = 1
-                                        break
-                                elif score==1:      
-                                        red_player_score += 1
-                                        reflections_per_round = 1
-                                        break
+                                        if score==1:
+                                                green_player_score += 1
+                                                reflections_per_round = 1
+                                                graphics.set_scores([green_player_score, red_player_score])
+                                                break
+                                        elif score==0:      
+                                                red_player_score += 1
+                                                reflections_per_round = 1
+                                                graphics.set_scores([green_player_score, red_player_score])
+                                                break
+                        if score >= 0:
+                                pong_physics.ball_pos = (320,240)
+                                graphics.draw()
+                                break
+                                
