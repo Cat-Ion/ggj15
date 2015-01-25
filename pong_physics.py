@@ -31,7 +31,8 @@ def step(dt):
     # Barrier collisions
     collision = 0
     for barr in barriers:
-        (Bx,By), (Zx,Zy), (Bvx,Bvy), collision = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), barr )
+        (Bx,By), (Zx,Zy), (Bvx,Bvy), collection = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), barr )
+        collision |= collection
     
     # Wall collisions
     if Zx > W: Zx = 2*W - Zx; Bvx = -Bvx; collision = 1
@@ -43,9 +44,13 @@ def step(dt):
     g1,g2 = 0,0
     (Bx,By), (Zx,Zy), (Bvx,Bvy), g1 = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), goals[0] )
     (Bx,By), (Zx,Zy), (Bvx,Bvy), g2 = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), goals[1] )
-    if g1: goal = 0
-    else if g2: goal = 1
-    else goal = -1
+    if g1:
+        goal = 0
+        collision = 1
+    elif g2:
+        goal = 1
+        collision = 1
+    else: goal = -1
 
     ball_pos = Zx,Zy
     ball_vel = Bvx,Bvy
