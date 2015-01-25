@@ -8,7 +8,7 @@ camera_to_screen = None
 
 def init():
     global capture
-    capture = cv2.VideoCapture(1)
+    capture = cv2.VideoCapture(0)
 
 def calibrate(screen):
     global camera_to_screen
