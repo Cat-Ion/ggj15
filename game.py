@@ -16,9 +16,6 @@ graphics.init()
 camera.init()
 camera.calibrate(graphics.screen)
 
-green_points = []
-red_points = []
-
 while True:
     line = gamemaths.fit_line(camera.get_line(0,
                                               graphics.draw_lines),
