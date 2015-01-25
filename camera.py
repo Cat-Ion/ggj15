@@ -82,7 +82,7 @@ def filter_green(img):
     h,s,v = cv2.split(img)
     h = 255-cv2.absdiff(h, 60)
     h = cv2.dilate(h, numpy.ones((5,5), numpy.uint8))
-    h = cv2.erode(h, numpy.ones((9,9), numpy.uint8))
+    h = cv2.erode(h, numpy.ones((5,5), numpy.uint8))
     s = cv2.dilate(s, numpy.ones((5,5), numpy.uint8))
     return cv2.threshold(numpy.uint8(255. * cv2.multiply(cv2.multiply(cv2.multiply(h/255., h/255.), s/255.), v/255.)), 30, 255, cv2.THRESH_TOZERO)[1]
 
@@ -90,7 +90,32 @@ def filter_red(img):
     h,s,v = cv2.split(img)
     h = 2*(254-cv2.absdiff(h, 0))
     h = cv2.dilate(h, numpy.ones((5,5), numpy.uint8))
-    h = cv2.erode(h, numpy.ones((9,9), numpy.uint8))
+    h = cv2.erode(h, numpy.ones((5,5), numpy.uint8))
     s = cv2.dilate(s, numpy.ones((5,5), numpy.uint8))
     return cv2.threshold(numpy.uint8(255. * cv2.multiply(cv2.multiply(cv2.multiply(h/255., h/255.), s/255.), v/255.)), 30, 255, cv2.THRESH_TOZERO)[1]
 
+def get_line(player, callback):
+    empty_frames = 0
+    points = []
+    while True:
+        point = grab_points(acquire())[player]
+        if point:
+            break
+
+    while empty_frames < 5 or len(points) < 2:
+        point = grab_points(acquire())[player]
+        if point == None:
+            empty_frames += 1
+            continue
+        empty_frames = 0
+        if len(points) > 0 and cv2.norm(point, points[-1]) < 10:
+            points[-1] = (
+                0.5 * point[0] + 0.5 * points[-1][0],
+                0.5 * point[1] + 0.5 * points[-1][1])
+        else:
+            points.append(point)
+        points = points[-20:]
+        if callback != None and len(points) > 1:
+            callback(points)
+    return points
+        
