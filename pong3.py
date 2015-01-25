@@ -8,6 +8,7 @@ screen = pygame.display.set_mode( pong_physics.field_size )
 pygame.display.set_caption("Pong")
 screen.fill((255,255,255))
 
+pygame.mixer.init(frequency=44100, size=-16, channels=2, buffer=256)
 pygame.mixer.music.load('tock2.wav')
 
 tnext = None
