@@ -53,18 +53,3 @@ while True:
 
 
                 
-        if state=2:
-                pass # Ball reflects n Times
-        if state=3:
-                pass # Green Player Scores
-        if state=4:
-                pass # red Player Scores
-        if state=5:
-                pass # green player wins
-        if state=6:
-                pass # red player wins
-
-        while not gameover:
-                pass
-
-
