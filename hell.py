@@ -3,6 +3,8 @@ import pong_physics
 import camera
 import time
 import gamemaths
+import random
+import pygame
 
 roundcount_for_reflection_upgrade = 1
 roundcount_for_line_upgrade = 5
@@ -29,6 +31,10 @@ if __name__ == '__main__':
         camera.init()
         camera.calibrate(graphics.screen)
         graphics.draw()
+        pygame.mixer.init(buffer = 256)
+        tock = [
+                pygame.mixer.Sound("tock1.wav"),
+                pygame.mixer.Sound("tock2.wav") ]
 
         while True:
                 roundcount += 1
@@ -53,7 +59,7 @@ if __name__ == '__main__':
                                         next_time+=1./fps
                                         time.sleep(next_time-time.time())
                                 else:
-                                        print(collision, score)
+                                        tock[random.randint(0,1)].play()
                                         if score<0:
                                                 break
 
