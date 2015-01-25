@@ -43,10 +43,13 @@ def step(dt):
     g1,g2 = 0,0
     (Bx,By), (Zx,Zy), (Bvx,Bvy), g1 = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), goals[0] )
     (Bx,By), (Zx,Zy), (Bvx,Bvy), g2 = collide_ball( (Bx,By), (Zx,Zy), (Bvx,Bvy), goals[1] )
-    
+    if g1: goal = 0
+    else if g2: goal = 1
+    else goal = -1
+
     ball_pos = Zx,Zy
     ball_vel = Bvx,Bvy
-    return collision, 0 if g1 else 1 if g2 else -1 
+    return collision, goal 
 
 
 
