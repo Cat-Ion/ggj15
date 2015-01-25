@@ -39,7 +39,7 @@ if __name__ == '__main__':
                                 gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
                         graphics.draw()
                         pong_physics.barriers.append(
-                                gamemaths.fit_line(camera.get_line(0, graphics.draw_lines), 100))
+                                gamemaths.fit_line(camera.get_line(1, graphics.draw_lines), 100))
                         graphics.draw()
 
 
@@ -59,12 +59,12 @@ if __name__ == '__main__':
                                         pong_physics.barriers[:] = []
                                         graphics.draw()
                                         
-                                        if score==0:
+                                        if score==1:
                                                 green_player_score += 1
                                                 reflections_per_round = 1
                                                 graphics.set_scores([green_player_score, red_player_score])
                                                 break
-                                        elif score==1:      
+                                        elif score==0:      
                                                 red_player_score += 1
                                                 reflections_per_round = 1
                                                 graphics.set_scores([green_player_score, red_player_score])
